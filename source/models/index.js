@@ -9,11 +9,12 @@ const sequelize = new Sequelize(
   'root',
   'secret',
   {
-    host: '128.199.90.155',
+    host: 'worldmed.hospital',
+    // host: '128.199.90.000',
     port: 3306,
     dialect: 'mysql',
     timezone: 'Asia/Bangkok',
-    logging: false
+    logging: false,
   }
 );
 

@@ -8,7 +8,8 @@ const sequelize = new Sequelize(
   'root',
   'secret',
   {
-    host: '128.199.90.155',
+    // host: '128.199.90.155',
+    host: 'worldmed.hospital',
     port: 3306,
     dialect: 'mysql',
     timezone: 'Asia/Bangkok',
