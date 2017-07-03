@@ -10,11 +10,11 @@ const bodyParser = require('body-parser');
 var http = require('http');
 // const index = require('./index.html');
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use('/api/patients',patients);
-app.use('/api/departments',departments);
-app.use('/api/visits',visits);
+app.use('/patients',patients);
+app.use('/departments',departments);
+app.use('/visits',visits);
 
 // function onRequest(req,res){
 //   res.writeHead(200,{'Content-Type':'text/html'});
@@ -32,8 +32,8 @@ app.use('/api/visits',visits);
 app.get('/',function(req,res){
   // res.send('Hello World!');
   res.writeHead(200,{'Content-Type':'text/html'});
-    // fs.readFile('./index.html',null,function(error,data){ local
-    fs.readFile('./var/www/worldmed.hospital/html/index.html',null,function(error,data){
+    fs.readFile('./index.html',null,function(error,data){
+    // fs.readFile('./var/www/worldmed.hospital/html/index.html',null,function(error,data){
       if(error){
         res.writeHead(404);
         res.write('File not found!');

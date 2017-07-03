@@ -1,5 +1,6 @@
 module.exports = function (sequelize, Sequelize) {
   const Visit = sequelize.define('Visit', {
+    visit_number: Sequelize.STRING,
     note: Sequelize.STRING,
     visited_date: Sequelize.DATE
   },{
