@@ -4,13 +4,13 @@ const models = require('../models');
 const fs = require('fs');
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(
-  'worldmed_reborn',
+  'research_cleft',
   'root',
-  'secret',
+  'root',
   {
     // host: '128.199.90.155',
-    host: 'worldmed.hospital',
-    port: 3306,
+    host: 'localhost',
+    port: 8889,
     dialect: 'mysql',
     timezone: 'Asia/Bangkok',
   }

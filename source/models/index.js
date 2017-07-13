@@ -1,17 +1,16 @@
 const Sequelize = require('sequelize');
 const Patient = require('./patient');
-const Department = require('./department');
-const Visit = require('./visit');
-const Admission = require('./admission');
+const Activity = require('./activity');
+const Record = require('./record');
 
 const sequelize = new Sequelize(
-  'worldmed_reborn',
+  'research_cleft',
   'root',
-  'secret',
+  'root',
   {
-    host: 'worldmed.hospital',
+    host: 'localhost',
     // host: '128.199.90.000',
-    port: 3306,
+    port: 8889,
     dialect: 'mysql',
     timezone: 'Asia/Bangkok',
     logging: false,
@@ -21,14 +20,12 @@ const sequelize = new Sequelize(
 var db = {
   Instance: sequelize,
   Patient: new Patient(sequelize, Sequelize),
-  Department: new Department(sequelize, Sequelize),
-  Visit: new Visit(sequelize, Sequelize),
-  Admission: new Admission(sequelize, Sequelize),
+  Activity: new Activity(sequelize, Sequelize),
+  Record: new Record(sequelize, Sequelize),
 }
 
-db.Patient.hasMany(db.Visit,{foreignKey: 'patient_id'});
-db.Patient.hasMany(db.Admission,{foreignKey: 'patient_id'});
-db.Department.hasMany(db.Visit,{foreignKey: 'department_id'});
+db.Patient.hasMany(db.Record,{foreignKey: 'patient_id'});
+db.Activity.hasMany(db.Record,{foreignKey: 'activity_id'});
 
 sequelize.sync();
 // sequelize.sync({force:true});

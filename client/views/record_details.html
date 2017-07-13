@@ -1,0 +1,21 @@
+<a href="#!/patients">Go Back</a>
+<br><br>
+<div class="panel panel-default" ng-init="getRecordInfo()">
+  <div class="panel-heading">
+    <h3 class="panel-title">ข้อมูลเบื้องต้นของกิจกรรม</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <!-- <div class="col-md-4">
+        <img src="{{book.image_url}}">
+      </div> -->
+      <div class="col-md-8">
+      </p>รหัส : {{record.id}}</p>
+    </p>วันที่มาทำ : {{record.visited_date}}</p>
+      </div>
+    </div>
+    <div class="pull-left">
+      <a href="#/records/edit/{{record.id}}">Edit</a> |  <a ng-click="removeRecord(record.id)">Delete</a>
+    </div>
+  </div>
+</div>

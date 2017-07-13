@@ -1,0 +1,17 @@
+<div class="panel panel-default" ng-init="getPatients()">
+  <div class="panel-heading">
+    <h3 class="panel-title">All Patient</h3>
+  </div>
+  <div class="panel-body">
+    <div class="col-md-8">
+    <p>Search by name:</p>
+    <input type="text" ng-model="p.search">
+  </div>
+    <div class="row">
+    	<div class="col-sm-6" ng-repeat="p in patients | filter:p.search">
+				<h4>{{p.first_name}}  {{p.last_name}} {{p.dob | date:format : timezone}}</h4>
+				<a class="btn btn-primary" href="#/patients/details/{{p.id}}">View Details</a>
+    	</div>
+    </div>
+  </div>
+</div>

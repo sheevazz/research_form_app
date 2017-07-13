@@ -1,0 +1,93 @@
+<a href="#!/patients">Go Back</a>
+<br><br>
+<div class="panel panel-default" ng-init="getPatientInfo()">
+  <div class="panel-heading">
+    <h3 class="panel-title">ข้อมูลเบื้องต้นของคนไข้</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <!-- <div class="col-md-4">
+        <img src="{{book.image_url}}">
+      </div> -->
+      <div class="col-md-8">
+      </p>ชื่อ : {{patient.first_name}}</p>
+    </p>นามสกุล : {{patient.last_name}}</p>
+  </p>วันเกิด : {{patient.dob | date:format : timezone}}</p>
+      </div>
+    </div>
+    <div class="pull-left">
+      <a href="#/patients/edit/{{patient.id}}">Edit</a> |  <a ng-click="removePatient(patient.id)">Delete</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
+<form ng-submit="addRecord(activity_id,patient.id,visited_date)" name="recordForm">
+<div class="form-group">
+<label for "sel1">ช่วงอายุ</label>
+<select class="form-control" name="age_range" ng-model="age_range" ng-change="selectActivity()" required>
+  <option ng-repeat="range in ranges" ng-value="range">{{ range }}</option>
+</select>
+
+
+</select>
+</div>
+
+<div class="form-group">
+<label for "sel1">ชื่อกิจกรรม</label>
+<select class="form-control" name="select2" ng-model="activity_id" required>
+  <option ng-repeat="activity in activities" ng-if="activity.age_range == age_range" ng-value="activity.id">{{ activity.name }}</option>
+</select>
+</div>
+<div class="form_group">
+  <label>เลือกวันที่</label>
+  <datepicker date-format="yyyy-MM-dd">
+    <input class="form-control" ng-model="visited_date" type="text" placeholder="ปี-เดือน-วัน" required/>
+  </datepicker>
+</div>
+<br><br><hr>
+<button type="submit" class="btn btn-primary" ng-disabled="!recordForm.$valid">เพิ่มประวัติการรักษา</button>
+</form>
+
+<!-- <script>
+$("#select1").change(function() {
+if ($(this).data('options') === undefined) {
+/*Taking an array of all options-2 and kind of embedding it on the select1*/
+$(this).data('options', $('#select2 option').clone());
+}
+var id = $(this).val();
+var options = $(this).data('options').filter('[value=' + id + ']');
+$('#select2').html(options);
+});
+</script> -->
+
+
+<br><br>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">ประวัติการรักษา</h3>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <!-- <div class="col-md-4">
+        <img src="{{book.image_url}}">
+      </div> -->
+      <div class="col-md-7" ng-repeat="range in ranges">
+        <p>{{ range }}</p>
+        <ul class="list-group">
+          <li class="list-group-item" ng-repeat="activity in activities" ng-if="activity.age_range == range">
+            {{ activity.name }}
+            <span class="badge" ng-click="toggleCollapse($event)" ng-if="p_act[activity.id].count > 0">{{ p_act[activity.id].count }}</span>
+            <div class="panel-collapse collapse">
+              <div class="panel-body">
+                <a ng-href="#/records/details/{{p_act[activity.id]['record_id'][$index]}}" ng-repeat="date in p_act[activity.id].dates track by $index">&nbsp; {{ date }} </a>
+                <!-- <a ng-href="#/records/details/{{p_act[activity_id].record_id[ind]}}" ng-repeat="(ind, date) in p_act[activity.id].dates track by $index">&nbsp; {{ date }} {{ p_act[activity_id].record_id[ind] }}</a> -->
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

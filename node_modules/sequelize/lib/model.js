@@ -843,20 +843,7 @@ class Model {
       }
     });
 
-    this.options.indexes = this.options.indexes.map(index => {
-      index = this._conformIndex(index);
-      //Add unique indexes to rawAttributes
-      if (index.unique && index.fields) {
-        for (const field of index.fields) {
-          const fieldName = typeof field === 'string' ? field : field.name || field.attribute;
-          if (this.rawAttributes[fieldName]) {
-            this.rawAttributes[fieldName].unique = this.attributes[fieldName].unique = index.name || index.unique;
-          }
-        }
-      }
-
-      return index;
-    });
+    this.options.indexes = this.options.indexes.map(this._conformIndex);
 
     this.sequelize.modelManager.addModel(this);
 
@@ -3722,14 +3709,14 @@ class Model {
   /**
   * Validate the attributes of this instance according to validation rules set in the model definition.
   *
-  * Emits null if and only if validation successful; otherwise an Error instance containing { field name : [error msgs] } entries.
+  * The promise fulfills if and only if validation successful; otherwise it rejects an Error instance containing { field name : [error msgs] } entries.
   *
   * @param {Object} [options] Options that are passed to the validator
   * @param {Array} [options.skip] An array of strings. All properties that are in this array will not be validated
   * @param {Array} [options.fields] An array of strings. Only the properties that are in this array will be validated
   * @param {Boolean} [options.hooks=true] Run before and after validate hooks
   *
-  * @return {Promise<undefined|Errors.ValidationError>}
+  * @return {Promise<undefined>}
   */
   validate(options) {
     return new InstanceValidator(this, options).validate();

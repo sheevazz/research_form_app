@@ -1,7 +1,6 @@
 module.exports = function (sequelize, Sequelize) {
-  const Admission = sequelize.define('Admission', {
-    name: Sequelize.STRING,
-    admission_date: Sequelize.DATE
+  const Record = sequelize.define('Record', {
+    visited_date: Sequelize.DATE
   },{
     timestamps: true,
     paranoid: true,
@@ -9,13 +8,13 @@ module.exports = function (sequelize, Sequelize) {
     charset: 'utf8',
     collate: 'utf8_bin',
     freezeTableName: true,
-    tableName: 'admission',
+    tableName: 'record',
     //Naming strategy Example
     name: {
-      singular: 'admission',
-      plural: 'admissions'
+      singular: 'record',
+      plural: 'records'
     },
 
   });
-  return Admission;
+  return Record;
 };

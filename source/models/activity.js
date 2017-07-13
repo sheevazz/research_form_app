@@ -1,6 +1,7 @@
 module.exports = function (sequelize, Sequelize) {
-  const Department = sequelize.define('Department', {
+  const Activity = sequelize.define('Activity', {
     name: Sequelize.STRING,
+    age_range: Sequelize.STRING,
   },{
     timestamps: true,
     paranoid: true,
@@ -8,13 +9,13 @@ module.exports = function (sequelize, Sequelize) {
     charset: 'utf8',
     collate: 'utf8_bin',
     freezeTableName: true,
-    tableName: 'department',
+    tableName: 'activity',
     //Naming strategy Example
     name: {
-      singular: 'department',
-      plural: 'departments'
+      singular: 'activity',
+      plural: 'activities'
     },
 
   });
-  return Department;
+  return Activity;
 };
