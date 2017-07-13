@@ -5,7 +5,7 @@ myApp.controller('PatientsController', ['$scope', '$http', '$location', '$routeP
     $scope.getPatients = function(){
         $http.get('/api/patients').then(function(response){
         $scope.patients = response.data;
-      	console.log("GET ALL"+response.data)
+      	// console.log("GET ALL",response.data)
 	});
     }
 
