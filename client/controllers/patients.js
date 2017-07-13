@@ -5,7 +5,8 @@ myApp.controller('PatientsController', ['$scope', '$http', '$location', '$routeP
     $scope.getPatients = function(){
         $http.get('/api/patients').then(function(response){
         $scope.patients = response.data;
-      });
+      	console.log("GET ALL"+response.data)
+	});
     }
 
     $scope.getPatientInfo = function(){
@@ -22,7 +23,7 @@ myApp.controller('PatientsController', ['$scope', '$http', '$location', '$routeP
 
 	$scope.addPatient = function(){
 		$http.post('/api/patients/', $scope.patient).then(function(response){
-			window.location.href='#/patients';
+			$location.url('/patients');
 		});
 	}
 
