@@ -25,7 +25,6 @@ router
     var obj = {
       where: {},
     }
-
     models.Patient
       .findAll(obj)
       .then( (patients) => {
@@ -43,6 +42,52 @@ router
            res.json(err);
   	     });
        });
+
+router
+  .route('/preprocessed')
+    //List Patients
+    .get( (req, res) => {
+      var obj = {
+        where: {},
+        include: [
+          {
+            model: models.Record
+          }
+        ],
+        order:[
+          ['id','ASC'],
+          [models.Record,'visited_date','ASC']
+        ]
+      }
+
+      models.Patient
+        .findAll(obj)
+        .then( (patients) => {
+          var big_array = [];
+       	  for(let patient in patients){
+            var small_array = [];
+            // console.log(patients[patient].dataValues.records);
+            if(patients[patient].dataValues.records){
+              for(let record in patients[patient].dataValues.records){
+                // console.log(patients[patient].dataValues.records[record].dataValues.patient_id+':'+patients[patient].dataValues.records[record].dataValues.activity_id);
+                small_array.push(patients[patient].dataValues.records[record].dataValues.activity_id);
+                small_array.push(-1)
+              }
+              small_array.push(-2)
+              big_array.push(small_array);
+            }
+
+          }
+          var result = '';
+          for(i in big_array){
+            // console.log(typeof big_array[i].join(' '));
+            result += big_array[i].join(' ');
+            result += '\n'
+          }
+          // console.log(big_array);
+          res.send(result);
+        });
+    })
 
 router
     .route('/:id')
