@@ -2,6 +2,8 @@ module.exports = function (sequelize, Sequelize) {
   const Activity = sequelize.define('Activity', {
     name: Sequelize.STRING,
     age_range: Sequelize.STRING,
+    age_range_min: Sequelize.FLOAT,
+    age_range_max: Sequelize.FLOAT,
   },{
     timestamps: true,
     paranoid: true,

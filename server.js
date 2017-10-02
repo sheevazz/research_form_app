@@ -44,6 +44,8 @@ app.use('/api/records',records);
 //       res.end();
 //     });
 // })
+app.locals.pretty = true;
+
 
 app.listen(8080, function(){
 

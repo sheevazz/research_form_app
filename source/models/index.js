@@ -25,7 +25,9 @@ var db = {
 }
 
 db.Patient.hasMany(db.Record,{foreignKey: 'patient_id'});
+db.Record.belongsTo(db.Patient,{foreignKey:'patient_id'});
 db.Activity.hasMany(db.Record,{foreignKey: 'activity_id'});
+db.Record.belongsTo(db.Activity,{foreignKey:'activity_id'});
 
 sequelize.sync();
 // sequelize.sync({force:true});
