@@ -66,20 +66,31 @@ router
 
       //read sequences input
       var freq_seq = [];
-      var text = fs.readFileSync(__dirname + '/cm-clasp_01.txt').toString('utf-8');
+      var text = fs.readFileSync(__dirname + '/cm-clasp_015_pid.txt').toString('utf-8');
       var seq_array = text.split("\n")
       var pattern = [];
       // var test = seq_array[0].split("#SUP:")
       console.time('timer');
-      for(seq in seq_array){
+      for(seq=0;seq<seq_array.length-1;seq++){
         var tmp = seq_array[seq].split("#SUP:");
         // console.log(typeof tmp[0]);
         var tmpseq = tmp[0].split(" -1 ");
+        var tmpminpat = tmp[1].split(" #SID: ");
+        // console.log(tmpminpat);
+        var minsup = parseInt(tmpminpat[0]);
+        // console.log(tmpminpat[1]);
+        var pat = tmpminpat[1].split(" ");
+
         for(t in tmpseq){
           tmpseq[t] = parseInt(tmpseq[t]);
         }
+        // console.log(tmpseq);
+        for(p in pat){
+          pat[p] = parseInt(pat[p]);
+        }
+        // console.log(tmpseq);
         // freq_seq.push({seq:tmp[0].replace(/ -1 /g,',').slice(0, -1),minsup:tmp[1]});
-        freq_seq.push({seq:tmpseq.slice(0,-1),minsup:tmp[1],chronicles:[]});
+        freq_seq.push({seq:tmpseq.slice(0,-1),minsup:minsup,pid:pat,chronicles:[]});
       }
 
 
@@ -237,6 +248,92 @@ router
               }
             }
             freq_seq.sort(sort_by('pattern_score', true, parseInt));
+            var count_high_good = 0;
+            var count_high_bad = 0;
+            var count_low_good = 0;
+            var count_low_bad = 0;
+            var count_high_score = 0;
+            var HGP = [];
+            var HBP = [];
+            var LGP = [];
+            var LBP = [];
+            for(c in freq_seq){
+              if(parseInt(freq_seq[c].pattern_score) >= 5){
+                count_high_score++;
+                for(pid in freq_seq[c].pid){
+                  if(freq_seq[c].pid[pid] === 2 || freq_seq[c].pid[pid] === 8 || freq_seq[c].pid[pid] === 29){
+                    count_high_good++;
+                    // console.log("HGP"+freq_seq[c].pid[pid]);
+                    break;
+                  }else if(freq_seq[c].pid[pid] === 3 || freq_seq[c].pid[pid] === 4 || freq_seq[c].pid[pid] === 5 || freq_seq[c].pid[pid] === 6 || freq_seq[c].pid[pid] === 11 || freq_seq[c].pid[pid] === 18 || freq_seq[c].pid[pid] === 23 || freq_seq[c].pid[pid] === 24 || freq_seq[c].pid[pid] === 25 || freq_seq[c].pid[pid] === 26 || freq_seq[c].pid[pid] === 27 ){
+                    count_high_bad++;
+                    // console.log("HBP"+freq_seq[c].pid[pid]);
+                    break;
+                  }
+                }
+              }else{
+                for(pid in freq_seq[c].pid){
+                  if(freq_seq[c].pid[pid] === 2 || freq_seq[c].pid[pid] === 8 || freq_seq[c].pid[pid] === 29){
+                    count_low_good++;
+                    break;
+                  }else if(freq_seq[c].pid[pid] === 3 || freq_seq[c].pid[pid] === 4 || freq_seq[c].pid[pid] === 5 || freq_seq[c].pid[pid] === 6 || freq_seq[c].pid[pid] === 11 || freq_seq[c].pid[pid] === 18 || freq_seq[c].pid[pid] === 23 || freq_seq[c].pid[pid] === 24 || freq_seq[c].pid[pid] === 25 || freq_seq[c].pid[pid] === 26 || freq_seq[c].pid[pid] === 27 ){
+                    count_low_bad++;
+                    break;
+                  }
+                }
+              }
+            }
+
+            for(d in freq_seq){
+              if(parseInt(freq_seq[d].pattern_score) >= 5){
+                // count_high_score++;
+                for(pidd in freq_seq[d].pid){
+                  if(freq_seq[d].pid[pidd] === 2 || freq_seq[d].pid[pidd] === 8 || freq_seq[d].pid[pidd] === 29){
+                    // count_high_good++;
+                    // console.log("HGP"+freq_seq[d].pid[pidd]);
+                    HGP.push(freq_seq[d].pid[pidd]);
+                    // break;
+                  }else if(freq_seq[d].pid[pidd] === 3 || freq_seq[d].pid[pidd] === 4 || freq_seq[d].pid[pidd] === 5 || freq_seq[d].pid[pidd] === 6 || freq_seq[d].pid[pidd] === 11 || freq_seq[d].pid[pidd] === 18 || freq_seq[d].pid[pidd] === 23 || freq_seq[d].pid[pidd] === 24 || freq_seq[d].pid[pidd] === 25 || freq_seq[d].pid[pidd] === 26 || freq_seq[d].pid[pidd] === 27 ){
+                    // count_high_bad++;
+                    // console.log("HBP"+freq_seq[d].pid[pidd]);
+                    HBP.push(freq_seq[d].pid[pidd]);
+                    // break;
+                  }
+                }
+              }else{
+                for(pidd in freq_seq[d].pid){
+                  if(freq_seq[d].pid[pidd] === 2 || freq_seq[d].pid[pidd] === 8 || freq_seq[d].pid[pidd] === 29){
+                    // count_low_good++;
+                    // console.log("LGP"+freq_seq[d].pid[pidd]);
+                    LGP.push(freq_seq[d].pid[pidd]);
+                    // break;
+                  }else if(freq_seq[d].pid[pidd] === 3 || freq_seq[d].pid[pidd] === 4 || freq_seq[d].pid[pidd] === 5 || freq_seq[d].pid[pidd] === 6 || freq_seq[d].pid[pidd] === 11 || freq_seq[d].pid[pidd] === 18 || freq_seq[d].pid[pidd] === 23 || freq_seq[d].pid[pidd] === 24 || freq_seq[d].pid[pidd] === 25 || freq_seq[d].pid[pidd] === 26 || freq_seq[d].pid[pidd] === 27 ){
+                    // count_low_bad++;
+                    // console.log("LBP"+freq_seq[d].pid[pidd]);
+                    LBP.push(freq_seq[d].pid[pidd]);
+                    // break;
+                  }
+                }
+              }
+            }
+            HGP = Array.from(new Set(HGP));
+            HBP = Array.from(new Set(HBP));
+            LGP = Array.from(new Set(LGP));
+            LBP = Array.from(new Set(LBP));
+
+            console.log("Count High Good:"+count_high_good);
+            console.log("Count Low Good:"+count_low_good);
+            console.log("Count High Bad:"+count_high_bad);
+            console.log("Count Low Bad:"+count_low_bad);
+            console.log("Count High Score:"+count_high_score);
+            console.log("Good result patient in high-score: "+HGP.sort());
+            console.log("Bad result patient in high-score: "+HBP.sort());
+            console.log("Good result patient in low-score: "+LGP.sort());
+            console.log("Bad result patient in low-score: "+LBP.sort());
+
+
+
+
             res.json(freq_seq);
           });
     });

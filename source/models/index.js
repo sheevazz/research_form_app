@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
   {
     host: 'localhost',
     // host: '128.199.90.000',
-    port: 3306,
+    port: 8889,
     dialect: 'mysql',
     timezone: 'Asia/Bangkok',
     logging: false,
