@@ -66,7 +66,7 @@ router
 
       //read sequences input
       var freq_seq = [];
-      var text = fs.readFileSync(__dirname + '/cm-clasp_015_pid.txt').toString('utf-8');
+      var text = fs.readFileSync(__dirname + '/cm-clasp_02_pid.txt').toString('utf-8');
       var seq_array = text.split("\n")
       var pattern = [];
       // var test = seq_array[0].split("#SUP:")
@@ -147,21 +147,6 @@ router
                     // array_obj[i].age_different_avg.push({1:parseFloat(tmp_visit_age),2:records[record].dataValues.activity.age_range_max});
 
                   }
-                  // array_obj[i].record_id.push(records[record].dataValues.id);
-                  // if(array_obj[i].first_visit===null&&array_obj[i].last_visit===null){
-                  //   array_obj[i].first_visit= records[record].dataValues.visited_date;
-                  //   array_obj[i].last_visit= records[record].dataValues.visited_date;
-                  //   // console.log('sus');
-                  // }
-                  // else if(array_obj[i].first_visit!==null&&(new Date(array_obj[i].first_visit).getTime() > new Date(records[record].dataValues.visited_date).getTime())){
-                  //   array_obj[i].first_visit = records[record].dataValues.visited_date;
-                  //   // console.log(new Date(records[record].dataValues.visited_date));
-                  // //  console.log(new Date(first_visit).getTime() > new Date(records[record].dataValues.visited_date).getTime());
-                  // }else if(array_obj[i].last_visit!==null&&(new Date(array_obj[i].last_visit).getTime() < new Date(records[record].dataValues.visited_date).getTime())){
-                  //   array_obj[i].last_visit = records[record].dataValues.visited_date;
-                  //     // console.log(new Date(records[record].dataValues.visited_date));
-                  //   //  console.log(new Date(first_visit).getTime() > new Date(records[record].dataValues.visited_date).getTime());
-                  // }
                 }
               }
             }
@@ -223,19 +208,7 @@ router
               }
               freq_seq[freq].pattern_score = score;
             }
-
-            // console.log(array_obj);
-            // console.log(activity_id_all+'---'+activity_id_all.length);
-            // console.log(visited_date+'---'+visited_date.length);
-            // console.log(Array.from(new Set(activity_id_all)));
-            // console.log(array_obj[0].activity_id);
-            // console.log(new Date().getTime() < new Date(2012-10-30).getTime());
-            // var t1 = performance.now();
-            // console.log(pattern);
             console.timeEnd('timer');
-            // console.log("execution time = "+(t1-t0)+"ms");
-            // res.json(records);
-            // console.log(typeof freq_seq);
             var sort_by = function(field, reverse, primer){
               var key = primer ?
                 function(x) {return primer(x[field])} :
@@ -247,6 +220,7 @@ router
                 return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
               }
             }
+            
             freq_seq.sort(sort_by('pattern_score', true, parseInt));
             var count_high_good = 0;
             var count_high_bad = 0;
